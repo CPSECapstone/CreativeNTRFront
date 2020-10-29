@@ -14,7 +14,7 @@ class NTRComment {
 
 /// Temporary function for interpreting the demo comments
 const interpComments = (comments: string): NTRComment[] => {
-    if (comments === "") {
+    if (comments.length === 1) {
         return [];
     }
 
@@ -27,32 +27,28 @@ const interpComments = (comments: string): NTRComment[] => {
 
     if (comments[0] === "\"") {
         while (comments[i] !== "\"") i++;
-        text = comments.substring(1, i - 1);
+        text = comments.substring(1, i);
     }
     else {
         text = "";
     }
 
-    let afterComma: number = i + 2;
-    i += 2;
-
-    while (comments[i] !== ",") i++;
-    nodeID = comments.substring(afterComma, i - 1);
-
-    afterComma = i + 1;
-    i++;
-
-    while (comments[i] !== ",") i++;
-    startOffset = Number(comments.substring(afterComma, i - 1));
-
-    afterComma = i + 1;
-    i++;
+    let data: string[] = comments.substring(i + 2).split(",");
+    nodeID = data[0];
+    startOffset = Number(data[1]);
+    endOffset = Number(data[2]);
 
     while (comments[i] !== "\n") i++;
-    endOffset = Number(comments.substring(afterComma, i - 1));
 
-    return [NTRComment.constructor(text, nodeID, startOffset, endOffset),
-        ...(interpComments(comments.substring(i + 1)))];
+    debugger;
+
+    console.log(text);
+    console.log(nodeID);
+
+    let commentArray: NTRComment[] = [];
+    commentArray.push(new NTRComment(text, nodeID, startOffset, endOffset));
+    commentArray.concat(interpComments(comments.substring(i + 1)));
+    return commentArray;
 }
 
 
