@@ -59,7 +59,13 @@ const interpComments = (comments: string): NTRComment[] => {
 /// Currently reads from text file - change to read from database later
 /// May require adjustment for formatting
 const getComments = () => {
-    
+    fetch('testComments.txt')
+        .then((response: Response): Promise<string> => {
+            return response.text();
+        })
+        .then((data: string): NTRComment[] => {
+            return interpComments(data);
+        });
 }
 
 export { getComments }
