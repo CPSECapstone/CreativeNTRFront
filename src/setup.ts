@@ -1,3 +1,5 @@
+import { NTRComment, getComments } from './comments';
+
 const hasMixedTextHtml = (nodes: ChildNode[]): boolean => {
     let hasTextNode: boolean = false;
     let hasHtmlNode: boolean = false;
@@ -51,8 +53,33 @@ const labelNodes = () => {
 
 const setup = () => window.onload = () => {
     labelNodes();
+    let comments: Promise<NTRComment[]> = getComments();
     let lastSelected: HTMLElement | undefined = undefined;
     let lastSelectedBackground: string = "";
+
+    comments.then((com: NTRComment[]) => {
+        com.forEach(element => {
+            let elem: HTMLElement | null = document.getElementById(element.nodeID);
+            let i: number = 0;
+
+            if (elem) {
+                elem.innerHTML = elem.innerHTML.substring(0, element.startOffset) +
+                    "<span id=comment_" + i + " class='highlight'>" +
+                    elem.innerHTML.substring(element.startOffset, element.endOffset) +
+                    "</span>" +
+                    elem.innerHTML.substring(element.endOffset);
+
+                    let child: HTMLElement | null = document.getElementById("comment_" + i);
+
+                    if (child) {
+                        child.style.backgroundColor = "yellow";
+                    }
+
+                    i++;
+            }
+        })
+    })
+
     document.addEventListener("selectionchange", () => {
         // This is all a bunch of temporary code showing what can be done with selections and ranges.
         // Because of this, the style is pretty awful. We should discuss exactly what we want to do with 
