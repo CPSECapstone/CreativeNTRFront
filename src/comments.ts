@@ -40,22 +40,20 @@ const interpComments = (comments: string): NTRComment[] => {
 
     while (comments[i] !== "\n") i++;
 
-    debugger;
-
     console.log(text);
     console.log(nodeID);
 
     let commentArray: NTRComment[] = [];
     commentArray.push(new NTRComment(text, nodeID, startOffset, endOffset));
-    commentArray.concat(interpComments(comments.substring(i + 1)));
+    commentArray.concat(interpComments(comments.substring(i)));
     return commentArray;
 }
 
 
 /// Currently reads from text file - change to read from database later
 /// May require adjustment for formatting
-const getComments = () => {
-    fetch('testComments.txt')
+const getComments = (): Promise<NTRComment[]> => {
+    return fetch('testComments.txt')
         .then((response: Response): Promise<string> => {
             return response.text();
         })
@@ -64,4 +62,4 @@ const getComments = () => {
         });
 }
 
-export { getComments }
+export { NTRComment, getComments }
