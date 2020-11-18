@@ -1,12 +1,14 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { HelloComponent } from './hello';
 import { setup } from './setup';
+import Toolbar from './Toolbar';
 
 setup();
 ReactDOM.render(
-    <HelloComponent/>,
+    <div className="column">
+        <Toolbar/>
+    </div>,
     document.getElementById('root')
 );
 
