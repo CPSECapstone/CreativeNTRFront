@@ -1,13 +1,16 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { HighlightButton } from './highlight';
 import { setup } from './setup';
 import { startHighlight } from './highlight';
+import Toolbar from './toolbar';
+
 
 setup();
 ReactDOM.render(
-    <HighlightButton/>,
+    <div className="column">
+    <Toolbar/>
+    </div>,
     document.getElementById('root')   
 );
  checkHighlight();
