@@ -8,7 +8,6 @@ export const HighlightButton = () => {
 
 export const startHighlight = ()  => {
   console.log("here")
-  document.addEventListener("selectionchange", () => {
     document.addEventListener("mouseup", () => {
       console.log("mouseup --> GO");
 
@@ -30,7 +29,6 @@ export const startHighlight = ()  => {
         range.insertNode(newNode);
       }
     })
-  })
 }
     
     
