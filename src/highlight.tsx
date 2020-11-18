@@ -6,19 +6,11 @@ export const HighlightButton = () => {
   );
 }
 
-//start highlight tool
-//selection
-  //ended?
-  //which direction?
-//has children?
-  //highlight leaves only
-
 export const startHighlight = ()  => {
   console.log("here")
-  let lastSelected: HTMLElement | undefined = undefined;
-  let highlightBackground: string = "";
   document.addEventListener("selectionchange", () => {
     document.addEventListener("mouseup", () => {
+      console.log("mouseup --> GO");
 
       const selection: Selection | null = document.getSelection();
       if (selection == null || selection.rangeCount === 0) {
@@ -30,29 +22,12 @@ export const startHighlight = ()  => {
       
       const node: Node | null = range.startContainer.parentNode;
       if (node != null) {
-        let newNode = document.createElement("div");
+        let newNode = document.createElement("span");
 
         newNode.appendChild(highlighted);
-        newNode.setAttribute("display", "inline;");
-        node.parentNode?.insertBefore(newNode, node);
-
-        // node.insertBefore(newNode, highlighted);
-        //let text = document.getElementById(node.id);
-        console.log(node);
-
-
-
-      }
-
-      console.log(node);
-      if (node) {
-        //get starting node to ending node and highlight all children
-
-        if (lastSelected) {
-          lastSelected.style.backgroundColor = highlightBackground;
-        }
-        lastSelected = (node as HTMLElement);
-        highlightBackground = (node as HTMLElement).style.backgroundColor = "yellow";
+        let selectedNode = (newNode as HTMLElement);
+        selectedNode.style.backgroundColor = "yellow";
+        range.insertNode(newNode);
       }
     })
   })
