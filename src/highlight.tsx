@@ -1,15 +1,6 @@
-import * as React from 'react';
-
-export const HighlightButton = () => {
-  return (
-    <button id="highlightBtn"></button>
-  );
-}
 
 export const startHighlight = ()  => {
-  console.log("here")
     document.addEventListener("mouseup", () => {
-      console.log("mouseup --> GO");
 
       const selection: Selection | null = document.getSelection();
       if (selection == null || selection.rangeCount === 0) {
