@@ -16,11 +16,15 @@ npm install
 ```
 
 ## Usage
-
-```python
+This will automatically host the page on port 3000 and open it in a browser
+```bash
 npm start
 ```
-This will automatically host the page on port 3000 and open it in a browser
+
+To run tests use
+```bash
+npm test
+```
 
 
 CLI: https://github.com/CPSECapstone/CreativeNTRFront/actions
