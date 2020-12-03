@@ -23,15 +23,13 @@ const toolbarContentStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
 
 const toolbarToggleStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
   backgroundColor: '#fafafa',
-  width: '30px',
-  right: '0px',
-  padding: '5px'
+  width: '2em'
 };
 
 const toolbarIconStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
   opacity: '0.5',
-  width: '45px',
-  height: '45px'
+  width: '2em',
+  height: '2em'
 };
 
 const toolbarButtonStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
@@ -47,11 +45,7 @@ const toolbarToggleableStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
 
 const Toolbar = () => {
 
-  const [isActive, changeIsActive] = React.useState(false);
-
-  const handleToggle = () => {
-    changeIsActive(!isActive);
-  };
+  const [isActive, changeIsActive] = React.useReducer(a => !a, false);
 
   const [isHighlighting, changeIsHighlighting] = React.useState(false);
 
@@ -69,7 +63,7 @@ const Toolbar = () => {
     return (
       <div style={toolbarStyle} className="toolbar">
         <Tooltip title="Close" placement="left">
-          <Button onClick={handleToggle} style={toolbarButtonStyle}><img alt="close" style={toolbarToggleStyle}  src="close.png" className="toolbarToggle"/></Button>
+          <Button onClick={changeIsActive} style={toolbarButtonStyle}><img alt="close" style={toolbarToggleStyle}  src="close.png" className="toolbarToggle"/></Button>
         </Tooltip>
         <div style={toolbarContentStyle} className="toolbarContent">
           <Tooltip title="Highlight" placement="left">
@@ -89,7 +83,7 @@ const Toolbar = () => {
     return (
       <div style={toolbarStyle} className="toolbar">
         <Tooltip title="Toolbar" placement="left">
-          <Button onClick={handleToggle} style={toolbarButtonStyle}><img alt="edit" style={toolbarToggleStyle} src="edit.png" className="toolbarToggle" /></Button>
+          <Button onClick={changeIsActive} style={toolbarButtonStyle}><img alt="edit" style={toolbarToggleStyle} src="edit.png" className="toolbarToggle" /></Button>
         </Tooltip>
       </div>
     );
