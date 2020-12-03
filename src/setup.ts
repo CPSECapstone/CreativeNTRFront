@@ -62,6 +62,7 @@ const setup = () => window.onload = () => {
             let elem: HTMLElement | null = document.getElementById(element.nodeID);
             let i: number = 0;
 
+            // doesn't work very well and i don't really know why
             if (elem) {
                 elem.innerHTML = elem.innerHTML.substring(0, element.startOffset) +
                     "<span id=comment_" + i + " class='highlight'>" +
