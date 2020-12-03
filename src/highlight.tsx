@@ -21,10 +21,3 @@ export const startHighlight = ()  => {
       }
     })
 }
-    
-    
-   
-
-// check.children length = 0 --> leaf node
-// check selected start --> selected end
-// check if each has children, find leaf and highlight leaf
