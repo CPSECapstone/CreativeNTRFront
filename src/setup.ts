@@ -65,12 +65,15 @@ const setup = () => window.onload = () => {
             // doesn't work very well and i don't really know why
             if (elem) {
                 elem.innerHTML = elem.innerHTML.substring(0, element.startOffset) +
-                    "<span id=comment_" + i + " class='highlight'>" +
+                    "<span id=comment_text_" + i + " onMouseEnter=\"document.getElementById(&quot;comment_" + i +
+                    "&quot;).style.display = &quot;block&quot;\" onMouseLeave=\"document.getElementById(&quot;comment_" + i +
+                    "&quot;).style.display = &quot;none&quot;\">" +
                     elem.innerHTML.substring(element.startOffset, element.endOffset) +
-                    "</span>" +
+                    "</span><div id=comment_" + i + " style=\"background-color: none; display: none; text-align: center;\">" +
+                    element.text + "</div>" +
                     elem.innerHTML.substring(element.endOffset);
 
-                    let child: HTMLElement | null = document.getElementById("comment_" + i);
+                    let child: HTMLElement | null = document.getElementById("comment_text_" + i);
 
                     if (child) {
                         child.style.backgroundColor = "yellow";
