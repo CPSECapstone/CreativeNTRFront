@@ -1,6 +1,8 @@
 import React from 'react';
-import { startHighlight } from './highlight';
-
+import { startHighlight, endHighlight } from './highlight';
+import Tooltip from '@material-ui/core/Tooltip'
+import Button from '@material-ui/core/Button';
+import ToggleButton from '@material-ui/lab/ToggleButton';
 
 const toolbarStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
   display: 'flex',
@@ -13,14 +15,14 @@ const toolbarStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
 
 const toolbarContentStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
   display: 'flex',
-  backgroundColor: '#d3d3d3',
+  backgroundColor: '#fafafa',
   flexDirection: 'column',
   right: '0px',
   border: '1px solid #757575'
 };
 
 const toolbarToggleStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
-  backgroundColor: '#d3d3d3',
+  backgroundColor: '#fafafa',
   width: '30px',
   right: '0px',
   padding: '5px'
@@ -33,8 +35,15 @@ const toolbarIconStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
 };
 
 const toolbarButtonStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
+  borderStyle: "none",
+  color: "black",
+  backgroundColor: "#fafafa"
+};
+
+const toolbarToggleableStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
   borderStyle: "none"
 };
+
 
 const Toolbar = () => {
 
@@ -44,13 +53,34 @@ const Toolbar = () => {
     changeIsActive(!isActive);
   };
 
+  const [isHighlighting, changeIsHighlighting] = React.useState(false);
+
+  const handleHighlight = () => {
+    if(isHighlighting) {
+      endHighlight();
+    }
+    else {
+      startHighlight();
+    }
+    changeIsHighlighting(!isHighlighting);
+  };
+
   if(isActive) {
     return (
       <div style={toolbarStyle} className="toolbar">
-        <button onClick={handleToggle} style={toolbarButtonStyle}><input type="image" alt="close" style={toolbarToggleStyle}  src="close.png" name="closeToolbar" className="toolbarToggle"/></button>
+        <Tooltip title="Close" placement="left">
+          <Button onClick={handleToggle} style={toolbarButtonStyle}><img alt="close" style={toolbarToggleStyle}  src="close.png" className="toolbarToggle"/></Button>
+        </Tooltip>
         <div style={toolbarContentStyle} className="toolbarContent">
-          <button onClick={startHighlight} style={toolbarButtonStyle}><input type="image" alt="highlight" style={toolbarIconStyle} src="highlight.png" name="highlighter" className="toolbarIcon"/></button>
-          <button style={toolbarButtonStyle}><input type="image" alt="pen" style={toolbarIconStyle} src="pen.png" name="pen" className="toolbarIcon" /></button>
+          <Tooltip title="Highlight" placement="left">
+            <ToggleButton value="check" onChange={handleHighlight} selected={isHighlighting} style={toolbarToggleableStyle}><img alt="highlight" style={toolbarIconStyle} src="highlight.png" className="toolbarIcon"/></ToggleButton>
+          </Tooltip>
+          <Tooltip title="Pen" placement="left">
+            <Button style={toolbarButtonStyle}><img alt="pen" style={toolbarIconStyle} src="pen.png" className="toolbarIcon" /></Button>
+          </Tooltip>
+          <Tooltip title="Pen" placement="left">
+            <Button style={toolbarButtonStyle}><img alt="pen" style={toolbarIconStyle} src="pen.png" className="toolbarIcon" /></Button>
+          </Tooltip>
         </div>
       </div>
     );
@@ -58,7 +88,9 @@ const Toolbar = () => {
   else {
     return (
       <div style={toolbarStyle} className="toolbar">
-        <button onClick={handleToggle} style={toolbarButtonStyle}><img alt="edit" style={toolbarToggleStyle} src="edit.png" className="toolbarToggle" /></button>
+        <Tooltip title="Toolbar" placement="left">
+          <Button onClick={handleToggle} style={toolbarButtonStyle}><img alt="edit" style={toolbarToggleStyle} src="edit.png" className="toolbarToggle" /></Button>
+        </Tooltip>
       </div>
     );
   }
