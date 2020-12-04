@@ -23,10 +23,10 @@ const labelNodes = () => {
             element.id = "annotator_elem_" + index;
         }
         /* Some nodes are like this: <div>
-         *      <h1>Text here</h1> 
-         *      more text adjacent to a node 
+         *      <h1>Text here</h1>
+         *      more text adjacent to a node
          * </div>
-         * 
+         *
          * Note the mixed text/HTML elements. This makes things harder for us.
          * So we want to wrap all these text elements with a <span> tag with an id
          */
@@ -62,7 +62,7 @@ const setup = () => window.onload = () => {
             let elem: HTMLElement | null = document.getElementById(element.nodeID);
             let i: number = 0;
 
-            // doesn't work very well and i don't really know why
+            // doesn't work very well for displaying more than one comment and i don't really know why
             if (elem) {
                 elem.innerHTML = elem.innerHTML.substring(0, element.startOffset) +
                     "<span id=comment_text_" + i + " onMouseEnter=\"document.getElementById(&quot;comment_" + i +

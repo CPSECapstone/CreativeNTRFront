@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { HelloComponent } from './hello';
 import { setup } from './setup';
+import Toolbar from './toolbar';
+
 
 setup();
 ReactDOM.render(
-    <HelloComponent/>,
-    document.getElementById('root')
+    <div className="column"><Toolbar/></div>,
+    document.getElementById('root')   
 );
 
