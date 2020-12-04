@@ -51,35 +51,6 @@ const labelNodes = () => {
 
 const setup = () => window.onload = () => {
     labelNodes();
-    let lastSelected: HTMLElement | undefined = undefined;
-    let lastSelectedBackground: string = "";
-    document.addEventListener("selectionchange", () => {
-        // This is all a bunch of temporary code showing what can be done with selections and ranges.
-        // Because of this, the style is pretty awful. We should discuss exactly what we want to do with 
-        // selections and what format we want the data in before we proceed too much further.
-        const selection: Selection | null = document.getSelection();
-        if (selection == null || selection.rangeCount === 0) {
-            if (lastSelected) {
-                lastSelected.style.backgroundColor = lastSelectedBackground;
-            }
-            return;
-        }
-        const range: Range = selection.getRangeAt(0);
-        /*
-         Do things with selection here
-         https://developer.mozilla.org/en-US/docs/Web/API/Selection
-         https://developer.mozilla.org/en-US/docs/Web/API/Range
-         */
-        const node: Node | null = range.startContainer.parentNode;
-        if (node) {
-            if (lastSelected) {
-                lastSelected.style.backgroundColor = lastSelectedBackground;
-            }
-            lastSelected = (node as HTMLElement);
-            lastSelectedBackground = (node as HTMLElement).style.backgroundColor;
-            (node as HTMLElement).style.backgroundColor = "red";
-        }
-    });
 };
 
 
