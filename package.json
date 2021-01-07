@@ -67,5 +67,7 @@
       "@babel/preset-env"
     ]
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "prettier": "2.2.1"
+  }
 }
