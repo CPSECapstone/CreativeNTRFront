@@ -47,88 +47,105 @@ const toolbarToggleableStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
   borderStyle: "none",
 };
 
-const Toolbar = () => {
-  const [isActive, changeIsActive] = React.useReducer((a) => !a, false);
+class Toolbar extends React.Component<
+  {},
+  { isActive: Boolean; isHighlighting: Boolean }
+> {
+  constructor({}) {
+    super({});
+    this.state = { isActive: false, isHighlighting: false };
 
-  const [isHighlighting, changeIsHighlighting] = React.useState(false);
+    this.handleIsActive = this.handleIsActive.bind(this);
+    this.handleHighlight = this.handleHighlight.bind(this);
+  }
 
-  const handleHighlight = () => {
-    if (isHighlighting) {
+  handleIsActive() {
+    this.setState((state) => ({
+      isActive: !state.isActive,
+    }));
+  }
+
+  handleHighlight() {
+    if (this.state.isHighlighting) {
       endHighlight();
     } else {
       startHighlight();
     }
-    changeIsHighlighting(!isHighlighting);
-  };
+    this.setState((state) => ({
+      isHighlighting: !state.isHighlighting,
+    }));
+  }
 
-  if (isActive) {
-    return (
-      <div style={toolbarStyle} className="toolbar">
-        <Tooltip title="Close" placement="left">
-          <Button onClick={changeIsActive} style={toolbarButtonStyle}>
-            <img
-              alt="close"
-              style={toolbarToggleStyle}
-              src={close_img}
-              className="toolbarToggle"
-            />
-          </Button>
-        </Tooltip>
-        <div style={toolbarContentStyle} className="toolbarContent">
-          <Tooltip title="Highlight" placement="left">
-            <ToggleButton
-              value="check"
-              onChange={handleHighlight}
-              selected={isHighlighting}
-              style={toolbarToggleableStyle}
-            >
+  render() {
+    if (this.state.isActive) {
+      return (
+        <div style={toolbarStyle} className="toolbar">
+          <Tooltip title="Close" placement="left">
+            <Button onClick={this.handleIsActive} style={toolbarButtonStyle}>
               <img
-                alt="highlight"
-                style={toolbarIconStyle}
-                src={highlight_img}
-                className="toolbarIcon"
-              />
-            </ToggleButton>
-          </Tooltip>
-          <Tooltip title="Pen" placement="left">
-            <Button style={toolbarButtonStyle}>
-              <img
-                alt="pen"
-                style={toolbarIconStyle}
-                src={pen_img}
-                className="toolbarIcon"
+                alt="close"
+                style={toolbarToggleStyle}
+                src={close_img}
+                className="toolbarToggle"
               />
             </Button>
           </Tooltip>
-          <Tooltip title="Pen" placement="left">
-            <Button style={toolbarButtonStyle}>
+          <div style={toolbarContentStyle} className="toolbarContent">
+            <Tooltip title="Highlight" placement="left">
+              <ToggleButton
+                value="check"
+                onChange={this.handleHighlight}
+                selected={this.state.isHighlighting.valueOf()}
+                style={toolbarToggleableStyle}
+              >
+                <img
+                  alt="highlight"
+                  style={toolbarIconStyle}
+                  src={highlight_img}
+                  className="toolbarIcon"
+                />
+              </ToggleButton>
+            </Tooltip>
+            <Tooltip title="Pen" placement="left">
+              <Button style={toolbarButtonStyle}>
+                <img
+                  alt="pen"
+                  style={toolbarIconStyle}
+                  src={pen_img}
+                  className="toolbarIcon"
+                />
+              </Button>
+            </Tooltip>
+            <Tooltip title="Pen" placement="left">
+              <Button style={toolbarButtonStyle}>
+                <img
+                  alt="pen"
+                  style={toolbarIconStyle}
+                  src={pen_img}
+                  className="toolbarIcon"
+                />
+              </Button>
+            </Tooltip>
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div style={toolbarStyle} className="toolbar">
+          <Tooltip title="Toolbar" placement="left">
+            <Button onClick={this.handleIsActive} style={toolbarButtonStyle}>
               <img
-                alt="pen"
-                style={toolbarIconStyle}
-                src={pen_img}
-                className="toolbarIcon"
+                alt="edit"
+                style={toolbarToggleStyle}
+                src={edit_img}
+                className="toolbarToggle"
               />
             </Button>
           </Tooltip>
         </div>
-      </div>
-    );
-  } else {
-    return (
-      <div style={toolbarStyle} className="toolbar">
-        <Tooltip title="Toolbar" placement="left">
-          <Button onClick={changeIsActive} style={toolbarButtonStyle}>
-            <img
-              alt="edit"
-              style={toolbarToggleStyle}
-              src={edit_img}
-              className="toolbarToggle"
-            />
-          </Button>
-        </Tooltip>
-      </div>
-    );
+      );
+    }
   }
-};
+}
 
 export default Toolbar;
