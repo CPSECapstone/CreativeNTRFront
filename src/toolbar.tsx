@@ -1,5 +1,4 @@
 import React from "react";
-import { startHighlight, endHighlight } from "./highlight";
 import Tooltip from "@material-ui/core/Tooltip";
 import Button from "@material-ui/core/Button";
 import ToggleButton from "@material-ui/lab/ToggleButton";
@@ -49,27 +48,59 @@ const toolbarToggleableStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
 
 class Toolbar extends React.Component<
   {},
-  { isActive: Boolean; isHighlighting: Boolean }
+  { isActive: Boolean; isHighlighting: Boolean; textAnnotations: Array<String> }
 > {
   constructor({}) {
     super({});
-    this.state = { isActive: false, isHighlighting: false };
+    this.state = {
+      isActive: false,
+      isHighlighting: false,
+      textAnnotations: [],
+    };
 
-    this.handleIsActive = this.handleIsActive.bind(this);
-    this.handleHighlight = this.handleHighlight.bind(this);
+    this.toggleIsActive = this.toggleIsActive.bind(this);
+    this.toggleIsHighlighting = this.toggleIsHighlighting.bind(this);
   }
 
-  handleIsActive() {
+  handleHighlight = () => {
+    const selection: Selection | null = document.getSelection();
+    if (selection == null || selection.rangeCount === 0) {
+      return;
+    }
+
+    const range: Range = selection.getRangeAt(0);
+    let highlighted = range.extractContents();
+
+    const node: Node | null = range.startContainer.parentNode;
+    if (node != null) {
+      let newNode = document.createElement("span");
+
+      newNode.appendChild(highlighted);
+      let selectedNode = newNode as HTMLElement;
+      selectedNode.style.backgroundColor = "yellow";
+      range.insertNode(newNode);
+    }
+  };
+
+  startHighlight = () => {
+    document.addEventListener("mouseup", this.handleHighlight);
+  };
+
+  endHighlight = () => {
+    document.removeEventListener("mouseup", this.handleHighlight);
+  };
+
+  toggleIsActive() {
     this.setState((state) => ({
       isActive: !state.isActive,
     }));
   }
 
-  handleHighlight() {
+  toggleIsHighlighting() {
     if (this.state.isHighlighting) {
-      endHighlight();
+      this.endHighlight();
     } else {
-      startHighlight();
+      this.startHighlight();
     }
     this.setState((state) => ({
       isHighlighting: !state.isHighlighting,
@@ -81,7 +112,7 @@ class Toolbar extends React.Component<
       return (
         <div style={toolbarStyle} className="toolbar">
           <Tooltip title="Close" placement="left">
-            <Button onClick={this.handleIsActive} style={toolbarButtonStyle}>
+            <Button onClick={this.toggleIsActive} style={toolbarButtonStyle}>
               <img
                 alt="close"
                 style={toolbarToggleStyle}
@@ -94,7 +125,7 @@ class Toolbar extends React.Component<
             <Tooltip title="Highlight" placement="left">
               <ToggleButton
                 value="check"
-                onChange={this.handleHighlight}
+                onChange={this.toggleIsHighlighting}
                 selected={this.state.isHighlighting.valueOf()}
                 style={toolbarToggleableStyle}
               >
@@ -133,7 +164,7 @@ class Toolbar extends React.Component<
       return (
         <div style={toolbarStyle} className="toolbar">
           <Tooltip title="Toolbar" placement="left">
-            <Button onClick={this.handleIsActive} style={toolbarButtonStyle}>
+            <Button onClick={this.toggleIsActive} style={toolbarButtonStyle}>
               <img
                 alt="edit"
                 style={toolbarToggleStyle}
