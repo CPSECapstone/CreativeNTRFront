@@ -48,18 +48,14 @@ const toolbarToggleableStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
 
 class Toolbar extends React.Component<
   {},
-  { isActive: Boolean; isHighlighting: Boolean; textAnnotations: Array<String> }
+  { isActive: Boolean; isHighlighting: Boolean }
 > {
   constructor({}) {
     super({});
     this.state = {
       isActive: false,
       isHighlighting: false,
-      textAnnotations: [],
     };
-
-    this.toggleIsActive = this.toggleIsActive.bind(this);
-    this.toggleIsHighlighting = this.toggleIsHighlighting.bind(this);
   }
 
   handleHighlight = () => {
@@ -90,13 +86,13 @@ class Toolbar extends React.Component<
     document.removeEventListener("mouseup", this.handleHighlight);
   };
 
-  toggleIsActive() {
+  toggleIsActive = () => {
     this.setState((state) => ({
       isActive: !state.isActive,
     }));
-  }
+  };
 
-  toggleIsHighlighting() {
+  toggleIsHighlighting = () => {
     if (this.state.isHighlighting) {
       this.endHighlight();
     } else {
@@ -105,7 +101,7 @@ class Toolbar extends React.Component<
     this.setState((state) => ({
       isHighlighting: !state.isHighlighting,
     }));
-  }
+  };
 
   render() {
     if (this.state.isActive) {
