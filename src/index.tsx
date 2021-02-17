@@ -7,7 +7,9 @@ import Toolbar from './toolbar';
 
 setup();
 ReactDOM.render(
-    <div className="column"><Toolbar/></div>,
+    <div className="column">
+        <Toolbar />
+    </div>,
     document.getElementById('root')   
 );
 

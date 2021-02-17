@@ -3,6 +3,7 @@ import { startHighlight, endHighlight } from './highlight';
 import Tooltip from '@material-ui/core/Tooltip'
 import Button from '@material-ui/core/Button';
 import ToggleButton from '@material-ui/lab/ToggleButton';
+import { Doodle } from './doodles/doodleCanvas';
 
 const toolbarStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
   display: 'flex',
@@ -10,7 +11,8 @@ const toolbarStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
   position: 'fixed',
   top: '25%',
   right: '0px',
-  padding: '1px'
+  padding: '1px',
+  zIndex: 1
 };
 
 const toolbarContentStyle: React.HTMLAttributes<HTMLDivElement>["style"] = {
@@ -70,10 +72,10 @@ const Toolbar = () => {
             <ToggleButton value="check" onChange={handleHighlight} selected={isHighlighting} style={toolbarToggleableStyle}><img alt="highlight" style={toolbarIconStyle} src="highlight.png" className="toolbarIcon"/></ToggleButton>
           </Tooltip>
           <Tooltip title="Pen" placement="left">
-            <Button style={toolbarButtonStyle}><img alt="pen" style={toolbarIconStyle} src="pen.png" className="toolbarIcon" /></Button>
+            <Button style={toolbarButtonStyle} onClick={Doodle.startDoodle}><img alt="pen" style={toolbarIconStyle} src="pen.png" className="toolbarIcon" /></Button>
           </Tooltip>
           <Tooltip title="Pen" placement="left">
-            <Button style={toolbarButtonStyle}><img alt="pen" style={toolbarIconStyle} src="pen.png" className="toolbarIcon" /></Button>
+             <Button style={toolbarButtonStyle} onClick={Doodle.stopDoodle}><img alt="pen" style={toolbarIconStyle} src="pen.png" className="toolbarIcon" /></Button>
           </Tooltip>
         </div>
       </div>
